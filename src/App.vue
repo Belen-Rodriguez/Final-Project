@@ -1,36 +1,43 @@
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/auth">Authorization</RouterLink>
-      </nav>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/auth">Authorization</RouterLink>
+    </nav>
   </header>
   <RouterView />
   <body>
-    <ul>
-      <li v-for="task in tasksStore.tasks">{{ task }}
-      </li>
+   <!-- <ul>
+      <li v-for="task in listOfTasks">{{ task }}</li>
     </ul>
-    <p>{{ tasksStore.taskCount }}</p>
-    <button @click="tasksStore.addTask('NewTask')">Add</button>
+    <p>{{ taskCount }}</p>
+    <button @click="addTask('NewTask')">Add</button> -->
   </body>
 </template>
 
 <script>
-import { RouterLink, RouterView } from 'vue-router';
-import { useTaskStore } from './stores/tasksStore'
-import { mapStores } from 'pinia';
-export default {
-    name: 'App',
-    components: {
-        
-    },
-    computed: {
-      ...mapStores(useTaskStore)
-    }
-};
-</script>
+import { RouterLink, RouterView } from 'vue-router'
+// import { mapStores } from 'pinia'
 
+import { useTaskStore } from './stores/tasksStore'
+import { mapActions, mapState } from 'pinia'
+export default {
+  name: 'App',
+
+  components: {},
+  computed: {
+    // ...mapStores(useTaskStore), esto sirve para traerse la store entera
+   // ...mapState(useTaskStore, ['listOfTasks', 'taskCount'])
+  },
+  methods: {
+    ...mapActions(useTaskStore, ['_fetchAllTasks'])
+  },
+  created() {
+    console.log('Created App View')
+    this._fetchAllTasks()
+  },
+}
+</script>
 
 <style scoped>
 header {
@@ -67,6 +74,4 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
-
 </style>
