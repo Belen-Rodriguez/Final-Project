@@ -27,7 +27,7 @@ export default {
   components: {},
   computed: {
     // ...mapStores(useTaskStore), esto sirve para traerse la store entera
-   // ...mapState(useTaskStore, ['listOfTasks', 'taskCount'])
+    ...mapState(useTaskStore, ['listOfTasks', 'taskCount'])
   },
   methods: {
     ...mapActions(useTaskStore, ['_fetchAllTasks'])
@@ -37,6 +37,9 @@ export default {
     this._fetchAllTasks()
   },
 }
+
+
+
 </script>
 
 <style scoped>
