@@ -45,6 +45,7 @@
 
 <script>
 import { useTaskStore } from '../stores/tasksStore'
+import { useUserStore } from '../stores/userStore'
 import { mapActions, mapState } from 'pinia'
 
 export default {
@@ -53,7 +54,8 @@ export default {
     return {
       taskToAdd: '',
       totalItems: [],
-      userID: '9805ccb2-40cf-4413-ad8c-64ff7fbfeb5c',
+      // importar la store y traer el id del usuario
+      userID: 'c1e063bf-86b4-47b4-8022-365515f542da',
       openInputStatus: false,
       selectedTaskId: '',
       taskDone: 'FALSE',
@@ -64,6 +66,7 @@ export default {
 
   computed: {
     ...mapState(useTaskStore, ['listOfTasks']),
+    ...mapState(useUserStore, ['user']),
     showedList(){
       return this.listOfTasks.filter(task => task.is_complete === false)
     },

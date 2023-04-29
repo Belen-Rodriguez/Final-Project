@@ -3,6 +3,12 @@
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/auth">Authorization</RouterLink>
+      <button @click="signOut()">Sign Out</button>
+
+         <!-- revisar porque necesita actualizar, si hay que usar el getter-->
+
+      <h2 v-if="userCount">{{ `${user.email}` }}</h2>
+      <h2 v-else>To start the adventure enter your account!</h2>
     </nav>
   </header>
   <RouterView />
@@ -20,21 +26,31 @@ import { RouterLink, RouterView } from 'vue-router'
 // import { mapStores } from 'pinia'
 
 import { useTaskStore } from './stores/tasksStore'
+import { useUserStore } from './stores/userStore'
 import { mapActions, mapState } from 'pinia'
+
 export default {
   name: 'App',
 
   components: {},
   computed: {
     // ...mapStores(useTaskStore), esto sirve para traerse la store entera
-    ...mapState(useTaskStore, ['listOfTasks', 'taskCount'])
+    ...mapState(useTaskStore, ['listOfTasks', 'taskCount']),
+    ...mapState(useUserStore, ['user', 'userCount']),
+
+    _userLogged(){
+      return this.user
+    }
   },
   methods: {
-    ...mapActions(useTaskStore, ['_fetchAllTasks'])
+    ...mapActions(useTaskStore, ['_fetchAllTasks']),
+    ...mapActions(useUserStore, ['_fetchUser','signOut'])
   },
-  created() {
+  async created() {
     console.log('Created App View')
-    this._fetchAllTasks()
+    await this._fetchAllTasks()
+    await this._fetchUser()
+    console.log(this.user)
   },
 }
 
