@@ -9,35 +9,38 @@
       <th>Delete</th>
       <th>Change</th>
     </tr>
-    <tr v-for="task in listOfTasks" :key="task.id">
+    <tr v-for="task in showedList" :key="task.id">
       <td v-if="task.id === selectedTaskId && openInputStatus">
-        <input type="text" v-model="newTitle"/>
+        <input type="text" v-model="newTitle" @keydown.enter="_changeDataStore(task, newTitle)" />
       </td>
       <td v-else>{{ task.title }}</td>
-      <td>
-        <button @click="_deleteTask(task.title)">Delete</button>
-      </td>
-      <td>
-        <button @click="_openInput(task)">Change</button>
-        <!-- <button @click="_changeTask(task) ">Change</button>-->
-      </td>
-      <td>
-        <input type="checkbox" :v-model="taskDone = true"/>
-      </td>
+      <td><button @click="_deleteTask(task.title)">Delete</button></td>
+      <td><button @click="_openInput(task)">Change</button></td>
+      <td><input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'TRUE')" /></td>
     </tr>
-  </table>
+</table>
 
-  <div>
-    <!-- <input v-if="openInputStatus" type="text" v-model="taskChanged" @keydown.enter="_changeTask({title: taskChanged, id: selectedTaskId})" /> 
-    form@submit.prevent>
-    -->
+<div>
     <input
       type="text"
       v-model="taskToAdd"
-      @keydown.enter="_addNewTask({ title: taskToAdd, user_id: userID })"
+      @keydown.enter="_sendTaskStore(taskToAdd, userID)"
     />
     <label for="name">Add New Task! </label>
   </div>
+
+<table>
+  <tr>
+      <th>Task done!</th>
+    </tr>
+    <tr v-for="task in showedListTrue" :key="task.id">
+      <td>{{ task.title }}</td>
+      <td><button @click="_deleteTask(task.title)">Delete</button></td>
+      <td><input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'FALSE')" /></td>
+    </tr>
+</table>
+
+
 </template>
 
 <script>
@@ -53,33 +56,55 @@ export default {
       userID: '9805ccb2-40cf-4413-ad8c-64ff7fbfeb5c',
       openInputStatus: false,
       selectedTaskId: '',
-      taskDone: false,
+      taskDone: 'FALSE',
       newTitle: '',
+      openInputAddStatus: false
     }
   },
 
   computed: {
-    ...mapState(useTaskStore, ['listOfTasks'])
-  },
-  methods: {
-    ...mapActions(useTaskStore, ['_addNewTask', '_deleteTask', '_changeTask']),
+    ...mapState(useTaskStore, ['listOfTasks']),
+    showedList(){
+      return this.listOfTasks.filter(task => task.is_complete === false)
+    },
+    showedListTrue(){
+      return this.listOfTasks.filter(task => task.is_complete === true)
+    }
 
+  },
+
+  methods: {
+    ...mapActions(useTaskStore, ['_addNewTask', '_deleteTask', '_changeTask', '_changeStatus']),
+
+    _sendTaskStore(taskToAdd, userID) {
+      this._addNewTask(taskToAdd, userID)
+      this.taskToAdd = '';
+    },
+    
     _openInput(task) {
       if (!this.openInputStatus) {
         this.openInputStatus = true
         this.selectedTaskId = task.id
-
       } else {
         this.openInputStatus = false
         this.selectedTaskId = ''
-        this._changeTask(task, this.newTask)
       }
       console.log(task)
       console.log(this.selectedTask)
       console.log(this.openInputStatus)
+      console.log(this.showedList)
+    },
+    _changeDataStore(task, newTitle){
+      this._changeTask(task, newTitle)
+      this.newTitle = ''
+      this.openInputStatus = false
+        this.selectedTaskId = ''
     }
+  
   }
 }
 </script>
 
 <style scoped></style>
+
+
