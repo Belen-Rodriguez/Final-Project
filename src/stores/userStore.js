@@ -8,6 +8,9 @@ export const useUserStore = defineStore('user', {
     getters: {
         userCount(state) {
             return state.user
+        },
+        userIdSupabase(state){
+            return state.user.id
         }
     },
     actions: {

@@ -13,11 +13,6 @@
   </header>
   <RouterView />
   <body>
-   <!-- <ul>
-      <li v-for="task in listOfTasks">{{ task }}</li>
-    </ul>
-    <p>{{ taskCount }}</p>
-    <button @click="addTask('NewTask')">Add</button> -->
   </body>
 </template>
 
@@ -37,10 +32,6 @@ export default {
     // ...mapStores(useTaskStore), esto sirve para traerse la store entera
     ...mapState(useTaskStore, ['listOfTasks', 'taskCount']),
     ...mapState(useUserStore, ['user', 'userCount']),
-
-    _userLogged(){
-      return this.user
-    }
   },
   methods: {
     ...mapActions(useTaskStore, ['_fetchAllTasks']),
@@ -51,6 +42,7 @@ export default {
     await this._fetchAllTasks()
     await this._fetchUser()
     console.log(this.user)
+    console.log(this.user.id)
   },
 }
 

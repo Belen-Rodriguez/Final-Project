@@ -24,7 +24,7 @@
     <input
       type="text"
       v-model="taskToAdd"
-      @keydown.enter="_sendTaskStore(taskToAdd, userID)"
+      @keydown.enter="_sendTaskStore(taskToAdd, this.userIdSupabase)"
     />
     <label for="name">Add New Task! </label>
   </div>
@@ -54,8 +54,8 @@ export default {
     return {
       taskToAdd: '',
       totalItems: [],
-      // importar la store y traer el id del usuario
-      userID: 'c1e063bf-86b4-47b4-8022-365515f542da',
+
+     // userID: 'ebef0852-0634-4cfb-9fd2-10e3cb84bb47',
       openInputStatus: false,
       selectedTaskId: '',
       taskDone: 'FALSE',
@@ -66,7 +66,7 @@ export default {
 
   computed: {
     ...mapState(useTaskStore, ['listOfTasks']),
-    ...mapState(useUserStore, ['user']),
+    ...mapState(useUserStore, ['user', 'userIdSupabase']),
     showedList(){
       return this.listOfTasks.filter(task => task.is_complete === false)
     },
