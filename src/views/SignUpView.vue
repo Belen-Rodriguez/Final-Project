@@ -19,7 +19,7 @@
   </template>
   
   <script>
-  import { useUserStore } from '../stores/userStore'
+  import userStore from '../stores/userStore'
   import { mapActions, mapState } from 'pinia'
   
   export default{
@@ -34,10 +34,10 @@
       components: {
       },
       computed: {
-      ...mapState(useUserStore, ['user']),
+      ...mapState(userStore, ['user']),
       },
       methods: {
-      ...mapActions(useUserStore, ['signUp']),
+      ...mapActions(userStore, ['signUp']),
   
       _sendNewUserToStore(userEntered, passwordEntered, confirmPasEntered) {
             if(passwordEntered === confirmPasEntered) {

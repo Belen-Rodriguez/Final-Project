@@ -1,5 +1,6 @@
 <template>
   <p>Home View</p>
+  <button type= "submit" @click="signOut()">Sign Out</button>
   <table>
     <tr>
       <th>To Do List</th>
@@ -16,11 +17,13 @@
       <td v-else>{{ task.title }}</td>
       <td><button @click="_deleteTask(task.title)">Delete</button></td>
       <td><button @click="_openInput(task)">Change</button></td>
-      <td><input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'TRUE')" /></td>
+      <td>
+        <input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'TRUE')" />
+      </td>
     </tr>
-</table>
+  </table>
 
-<div>
+  <div>
     <input
       type="text"
       v-model="taskToAdd"
@@ -29,23 +32,23 @@
     <label for="name">Add New Task! </label>
   </div>
 
-<table>
-  <tr>
+  <table>
+    <tr>
       <th>Task done!</th>
     </tr>
     <tr v-for="task in showedListTrue" :key="task.id">
       <td>{{ task.title }}</td>
       <td><button @click="_deleteTask(task.title)">Delete</button></td>
-      <td><input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'FALSE')" /></td>
+      <td>
+        <input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'FALSE')" />
+      </td>
     </tr>
-</table>
-
-
+  </table>
 </template>
 
 <script>
 import { useTaskStore } from '../stores/tasksStore'
-import { useUserStore } from '../stores/userStore'
+import userStore from '../stores/userStore'
 import { mapActions, mapState } from 'pinia'
 
 export default {
@@ -66,7 +69,7 @@ export default {
 
   computed: {
     ...mapState(useTaskStore, ['listOfTasks']),
-    ...mapState(useUserStore, ['user', 'userIdSupabase']),
+    ...mapState(userStore, ['user', 'userIdSupabase']),
     showedList(){
       return this.listOfTasks.filter(task => task.is_complete === false)
     },
@@ -77,13 +80,19 @@ export default {
   },
 
   methods: {
-    ...mapActions(useTaskStore, ['_addNewTask', '_deleteTask', '_changeTask', '_changeStatus']),
+    ...mapActions(useTaskStore, ['_fetchAllTasks','_addNewTask', '_deleteTask', '_changeTask', '_changeStatus']),
+    ...mapActions(userStore, ['signOut']),
+    
+    async created() {
+      console.log('Created Home View')
+      await this._fetchAllTasks()
+    },
 
     _sendTaskStore(taskToAdd, userID) {
       this._addNewTask(taskToAdd, userID)
       this.taskToAdd = '';
     },
-    
+
     _openInput(task) {
       if (!this.openInputStatus) {
         this.openInputStatus = true
@@ -103,11 +112,9 @@ export default {
       this.openInputStatus = false
         this.selectedTaskId = ''
     }
-  
+
   }
 }
 </script>
 
 <style scoped></style>
-
-

@@ -1,13 +1,14 @@
 <template>
   <h1>Sign In View</h1>
   <form @submit.prevent>
+
     <div>
     <label for="email" >Email</label><br>
     <input v-model="userEntered" type="email" id="email" name="email" placeholder="Enter your email">
     </div>
     <div>
     <label for="password">Password</label><br>
-    <input v-model="passwordEntered" type="text" id="password" name="password">
+    <input v-model="passwordEntered" type="password" id="password" name="password">
     <button @click="_sendUserToStore(userEntered,passwordEntered)" type="submit">Log in</button>
     </div>
 
@@ -15,7 +16,7 @@
 </template>
 
 <script>
-import { useUserStore } from '../stores/userStore'
+import userStore from '../stores/userStore'
 import { mapActions, mapState } from 'pinia'
 
 export default{
@@ -29,10 +30,10 @@ export default{
     components: {
     },
     computed: {
-    ...mapState(useUserStore, ['user']),
+    ...mapState(userStore, ['user']),
     },
     methods: {
-    ...mapActions(useUserStore, ['signIn']),
+    ...mapActions(userStore, ['signIn']),
 
     _sendUserToStore(userEntered, passwordEntered) {
         this.signIn(userEntered, passwordEntered)

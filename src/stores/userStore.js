@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import supabase from '../supabase/index'
 
-export const useUserStore = defineStore('user', {
+export default defineStore('user', {
     state: () => ({
         user: null,
     }),
@@ -11,6 +11,9 @@ export const useUserStore = defineStore('user', {
         },
         userIdSupabase(state){
             return state.user.id
+        },
+        userEmail(state){
+            return state.user.email
         }
     },
     actions: {
