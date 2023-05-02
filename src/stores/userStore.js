@@ -3,10 +3,10 @@ import supabase from '../supabase/index'
 
 export default defineStore('user', {
     state: () => ({
-        user: null,
+        user: undefined,
     }),
-    getters: {
-        userCount(state) {
+   /*  getters: {
+       userCount(state) {
             return state.user
         },
         userIdSupabase(state){
@@ -15,7 +15,7 @@ export default defineStore('user', {
         userEmail(state){
             return state.user.email
         }
-    },
+    },*/
     actions: {
 
         async _fetchUser() {
@@ -38,8 +38,9 @@ export default defineStore('user', {
                 console.error(error)
                 return;
             }
-            console.log(data)
-            this.user = data
+            console.log("data store user ", data)
+            this.user = data.user
+            console.log("user store user", this.user)
         },
 
         async signOut() {
@@ -63,7 +64,7 @@ export default defineStore('user', {
                 return;
             }
             console.log(data)
-            this.user = data
+            this.user = data.user
         }
 
 
@@ -73,5 +74,8 @@ export default defineStore('user', {
 /*
             email: 'belerguez@gmail.com',
             password: '0306BelenR92',
+
+            email: 'belenrodiguez@ironhack.com'
+            password: 'belenrodriguez'
             */
 

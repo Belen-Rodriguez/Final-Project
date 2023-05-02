@@ -20,6 +20,7 @@
   
   <script>
   import userStore from '../stores/userStore'
+  import { useTaskStore } from '../stores/tasksStore'
   import { mapActions, mapState } from 'pinia'
   
   export default{
@@ -38,15 +39,16 @@
       },
       methods: {
       ...mapActions(userStore, ['signUp']),
+      ...mapActions(useTaskStore, ['_fetchAllTasks']),
   
-      _sendNewUserToStore(userEntered, passwordEntered, confirmPasEntered) {
+      async _sendNewUserToStore(userEntered, passwordEntered, confirmPasEntered) {
             if(passwordEntered === confirmPasEntered) {
-          this.signUp(userEntered, passwordEntered) 
+          await this.signUp(userEntered, passwordEntered) 
+          this.$router.push({path: '/'})
           this.userEntered = ''
           this.passwordEntered = ''
           this.confirmPasEntered = ''
         console.log('created account!')}
-        console.log('account no created');
           return
       }
       }

@@ -1,14 +1,12 @@
 <template>
   <header>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/auth">Authorization</RouterLink>
+      <!--RouterLink to="/auth">Authorization</RouterLink-->
+      <!-- revisar porque necesita actualizar, si hay que usar el getter-->
 
-
-         <!-- revisar porque necesita actualizar, si hay que usar el getter-->
-
-      <h2 v-if="user !== null">{{ `${userEmail}` }}</h2>
+      <h2 v-if="user">{{ `Hi ${user.email}` }}</h2>
       <h2 v-else>To start the adventure enter your account!</h2>
+      <RouterLink to="/">Home</RouterLink>
     </nav>
   </header>
   <RouterView />
@@ -39,10 +37,7 @@ export default {
   },
   async created() {
     console.log('Created App View')
-    await this._fetchAllTasks()
-    await this._fetchUser()
     console.log(this.user)
-    console.log(this.user.id)
   },
 }
 

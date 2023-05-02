@@ -34,14 +34,21 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
 
-  const useUserStore = userStore()
+  const useUserStore = userStore() 
+  if (useUserStore.user === undefined){
+    await useUserStore._fetchUser()
+  }
 
-  const isLoggedIn = useUserStore.user !== null ;
+  const isLoggedIn = useUserStore.user !== null;
   if (!isLoggedIn && to.name !== 'signIn' && to.name !== 'signUp')
-  return { name: 'signIn'} 
+    return { name: 'signIn' }
   console.log(useUserStore)
+
+  if ((to.name === 'signIn' || to.name === 'signUp') && isLoggedIn) {
+    return { name: 'home' }
+  }
 })
 
 export default router

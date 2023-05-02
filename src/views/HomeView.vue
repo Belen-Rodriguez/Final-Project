@@ -1,6 +1,5 @@
 <template>
-  <p>Home View</p>
-  <button type= "submit" @click="signOut()">Sign Out</button>
+  <button type="submit" @click="_handleSignOut()">Sign Out</button>
   <table>
     <tr>
       <th>To Do List</th>
@@ -18,29 +17,31 @@
       <td><button @click="_deleteTask(task.title)">Delete</button></td>
       <td><button @click="_openInput(task)">Change</button></td>
       <td>
-        <input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'TRUE')" />
+        <input
+          type="checkbox"
+          :checked="task.is_complete"
+          @change="_changeStatus(task, $event.target.checked)"
+        />
       </td>
     </tr>
   </table>
-
   <div>
-    <input
-      type="text"
-      v-model="taskToAdd"
-      @keydown.enter="_sendTaskStore(taskToAdd, this.userIdSupabase)"
-    />
+    <input type="text" v-model="taskToAdd" @keydown.enter="_sendTaskStore(taskToAdd, user)" />
     <label for="name">Add New Task! </label>
   </div>
-
-  <table>
-    <tr>
-      <th>Task done!</th>
-    </tr>
+  <div>
+    <button @click="_openTaskDone()">Task done!</button>
+  </div>
+  <table v-if="taskDoneList">
     <tr v-for="task in showedListTrue" :key="task.id">
       <td>{{ task.title }}</td>
       <td><button @click="_deleteTask(task.title)">Delete</button></td>
       <td>
-        <input type="checkbox" :check="task.is_complete" @change="_changeStatus(task, 'FALSE')" />
+        <input
+          type="checkbox"
+          :checked="task.is_complete"
+          @change="_changeStatus(task, $event.target.checked)"
+        />
       </td>
     </tr>
   </table>
@@ -58,39 +59,45 @@ export default {
       taskToAdd: '',
       totalItems: [],
 
-     // userID: 'ebef0852-0634-4cfb-9fd2-10e3cb84bb47',
+      // userID: 'ebef0852-0634-4cfb-9fd2-10e3cb84bb47',
       openInputStatus: false,
       selectedTaskId: '',
       taskDone: 'FALSE',
       newTitle: '',
-      openInputAddStatus: false
+      openInputAddStatus: false,
+      taskDoneList: false
     }
   },
 
   computed: {
     ...mapState(useTaskStore, ['listOfTasks']),
-    ...mapState(userStore, ['user', 'userIdSupabase']),
-    showedList(){
-      return this.listOfTasks.filter(task => task.is_complete === false)
+    ...mapState(userStore, ['user']),
+    showedList() {
+      return this.listOfTasks.filter((task) => task.is_complete === false)
     },
-    showedListTrue(){
-      return this.listOfTasks.filter(task => task.is_complete === true)
+    showedListTrue() {
+      return this.listOfTasks.filter((task) => task.is_complete === true)
     }
-
   },
 
   methods: {
-    ...mapActions(useTaskStore, ['_fetchAllTasks','_addNewTask', '_deleteTask', '_changeTask', '_changeStatus']),
+    ...mapActions(useTaskStore, [
+      '_fetchAllTasks',
+      '_addNewTask',
+      '_deleteTask',
+      '_changeTask',
+      '_changeStatus'
+    ]),
     ...mapActions(userStore, ['signOut']),
-    
-    async created() {
-      console.log('Created Home View')
-      await this._fetchAllTasks()
+
+    async _handleSignOut() {
+      await this.signOut()
+      this.$router.push({ path: '/auth' })
     },
 
-    _sendTaskStore(taskToAdd, userID) {
-      this._addNewTask(taskToAdd, userID)
-      this.taskToAdd = '';
+    _sendTaskStore(taskToAdd, user) {
+      this._addNewTask(taskToAdd, user.id)
+      this.taskToAdd = ''
     },
 
     _openInput(task) {
@@ -106,13 +113,23 @@ export default {
       console.log(this.openInputStatus)
       console.log(this.showedList)
     },
-    _changeDataStore(task, newTitle){
+    _changeDataStore(task, newTitle) {
       this._changeTask(task, newTitle)
       this.newTitle = ''
       this.openInputStatus = false
-        this.selectedTaskId = ''
+      this.selectedTaskId = ''
+    },
+    _openTaskDone() {
+      if (!this.taskDoneList) {
+        this.taskDoneList = true
+      } else {
+        this.taskDoneList = false
+      }
     }
-
+  },
+  async created() {
+    console.log('Created Home View')
+    await this._fetchAllTasks()
   }
 }
 </script>

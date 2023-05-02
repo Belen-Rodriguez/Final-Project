@@ -99,6 +99,7 @@ listToDoTask(state) {
     },
 
     async _changeStatus(task, taskDone) {
+      console.log(taskDone)
       const { data, error } = await supabase
         .from('tasks')
         .update({ is_complete: taskDone })
