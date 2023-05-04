@@ -16,8 +16,6 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-// import { mapStores } from 'pinia'
-
 import { useTaskStore } from './stores/tasksStore'
 import userStore from './stores/userStore'
 import { mapActions, mapState } from 'pinia'
@@ -27,7 +25,6 @@ export default {
 
   components: {},
   computed: {
-    // ...mapStores(useTaskStore), esto sirve para traerse la store entera
     ...mapState(useTaskStore, ['listOfTasks', 'taskCount']),
     ...mapState(userStore, ['user', 'userCount','userEmail']),
   },

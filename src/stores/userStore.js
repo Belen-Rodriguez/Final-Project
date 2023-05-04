@@ -29,14 +29,13 @@ export default defineStore('user', {
             this.user = user
         },
 
-        async signIn(userEntered, passwordEntered) {
+        async signIn(userMail, passwordEntered) {
             const { data, error } = await supabase.auth.signInWithPassword({
-                email: userEntered,
+                email: userMail,
                 password: passwordEntered,
             })
             if (error) {
-                console.error(error)
-                return;
+                throw error
             }
             console.log("data store user ", data)
             this.user = data.user
@@ -46,22 +45,20 @@ export default defineStore('user', {
         async signOut() {
             const { error } = await supabase.auth.signOut()
             if (error) {
-                console.error(error)
-                return;
+                throw error
             }
             this.user = null
             console.log(this.user)
         },
 
-        async signUp(userEntered, passwordEntered) {
+        async signUp(userMail, passwordEntered) {
 
             const { data, error } = await supabase.auth.signUp({
-                email: userEntered,
+                email: userMail,
                 password: passwordEntered,
             })
             if (error) {
-                console.error(error)
-                return;
+                throw error
             }
             console.log(data)
             this.user = data.user
@@ -77,5 +74,8 @@ export default defineStore('user', {
 
             email: 'belenrodiguez@ironhack.com'
             password: 'belenrodriguez'
+
+            email: sergiperezmunoz@gmail.com
+            password: AAA111qqq
             */
 

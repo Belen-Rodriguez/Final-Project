@@ -1,5 +1,4 @@
 <template>
-    <h2>Welcome!</h2>
     <div class="container-auth">
     <RouterView />
     <RouterLink to="/auth/sign-in" class="links">Sign In</RouterLink>

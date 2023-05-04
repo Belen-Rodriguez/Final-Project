@@ -1,25 +1,26 @@
 <template>
   <div class="container-sign">
-    <h4>Sign In your Account!</h4>
+    <h4>Sign In</h4>
     <form @submit.prevent class="container-form-sign">
       <div>
         <label for="email">Email</label><br />
         <input
-          v-model="userEntered"
+          v-model="userMail"
           type="email"
           id="email"
           name="email"
           placeholder="Enter your email"
         />
       </div>
+      <p v-if="isValidEmail === false" class="inValid">Invalid email address</p>
+
       <div>
         <label for="password">Password</label><br />
         <input v-model="passwordEntered" type="password" id="password" name="password" />
-        <button @click="_sendUserToStore(userEntered, passwordEntered)" type="submit">
-          Log in!
-        </button>
+        <button @click="_sendUserToStore(userMail, passwordEntered)" type="submit">Log in!</button>
       </div>
     </form>
+    <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
   </div>
 </template>
 
@@ -32,31 +33,48 @@ export default {
   name: 'SignInView',
   data() {
     return {
-      userEntered: '',
-      passwordEntered: ''
+      startValidation: false,
+      userMail: '',
+      passwordEntered: '',
+      errorMsg: ''
     }
   },
   components: {},
   computed: {
-    ...mapState(userStore, ['user'])
+    ...mapState(userStore, ['user']),
+
+    isValidEmail() {
+      return this.startValidation
+        ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.userMail)
+        : null
+    }
   },
   methods: {
     ...mapActions(userStore, ['signIn']),
     ...mapActions(useTaskStore, ['_fetchAllTasks']),
-  
 
-    async _sendUserToStore(userEntered, passwordEntered) {
-      await this.signIn(userEntered, passwordEntered)
-      this.$router.push({path: '/'})
-      this.userEntered = ''
-      this.passwordEntered = ''
+    async _sendUserToStore(userMail, passwordEntered) {
+      this.startValidation = true
+      try {
+        await this.signIn(userMail, passwordEntered)
+        this.$router.push({ path: '/' })
+        this.userMail = ''
+        this.passwordEntered = ''
+      }
+      catch (error){
+        console.log(error)
+        this.errorMsg = 'Invalid credentials, please enter your details again.'
+      }
+
     }
-    
   }
 }
 </script>
 
 <style scoped>
+.inValid {
+  color: darkred;
+}
 .container-sign {
   display: flex;
   flex-direction: column;
@@ -68,7 +86,7 @@ export default {
   text-align: center;
   margin-top: 1rem;
 }
-input{
+input {
   width: 100%;
 }
 button {
@@ -79,7 +97,7 @@ button {
   color: rgba(82, 147, 126, 0.479);
   background-color: white;
   border: 2px;
-  border-color:  rgba(82, 147, 126, 0.479);
+  border-color: rgba(82, 147, 126, 0.479);
   font-size: 1.5rem;
 }
 </style>

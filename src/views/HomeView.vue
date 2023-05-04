@@ -12,6 +12,7 @@
     <tr v-for="task in showedList" :key="task.id">
       <td v-if="task.id === selectedTaskId && openInputStatus">
         <input type="text" v-model="newTitle" @keydown.enter="_changeDataStore(task, newTitle)" />
+        <button @click="_changeDataStore(task, newTitle)">Save</button>
       </td>
       <td v-else>{{ task.title }}</td>
       <td><button @click="_deleteTask(task.title)">Delete</button></td>
@@ -26,11 +27,12 @@
     </tr>
   </table>
   <div>
-    <input type="text" v-model="taskToAdd" @keydown.enter="_sendTaskStore(taskToAdd, user)" />
+    <input type="text" v-model="taskToAdd" @keydown.enter="_sendTaskStore(taskToAdd, user)"/>
+    <button @click="_sendTaskStore(taskToAdd, user)">New Task</button>
     <label for="name">Add New Task! </label>
   </div>
   <div>
-    <button @click="_openTaskDone()">Task done!</button>
+    <button @click="_openTaskDone()">Show tasks done</button>
   </div>
   <table v-if="taskDoneList">
     <tr v-for="task in showedListTrue" :key="task.id">
@@ -58,8 +60,6 @@ export default {
     return {
       taskToAdd: '',
       totalItems: [],
-
-      // userID: 'ebef0852-0634-4cfb-9fd2-10e3cb84bb47',
       openInputStatus: false,
       selectedTaskId: '',
       taskDone: 'FALSE',
@@ -108,10 +108,6 @@ export default {
         this.openInputStatus = false
         this.selectedTaskId = ''
       }
-      console.log(task)
-      console.log(this.selectedTask)
-      console.log(this.openInputStatus)
-      console.log(this.showedList)
     },
     _changeDataStore(task, newTitle) {
       this._changeTask(task, newTitle)
