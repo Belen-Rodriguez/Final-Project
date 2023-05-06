@@ -1,5 +1,5 @@
 <template>
-    <button type="submit" @click="_handleSignOut()">Sign Out</button>
+
     <table>
       <tr>
         <th>To Do List</th>
@@ -55,7 +55,7 @@
   import { mapActions, mapState } from 'pinia'
   
   export default {
-    name: 'HomeView',
+    name: 'taskTable',
     data() {
       return {
         taskToAdd: '',
@@ -82,18 +82,11 @@
   
     methods: {
       ...mapActions(useTaskStore, [
-        '_fetchAllTasks',
         '_addNewTask',
         '_deleteTask',
         '_changeTask',
         '_changeStatus'
       ]),
-      ...mapActions(userStore, ['signOut']),
-  
-      async _handleSignOut() {
-        await this.signOut()
-        this.$router.push({ path: '/auth' })
-      },
   
       _sendTaskStore(taskToAdd, user) {
         this._addNewTask(taskToAdd, user.id)

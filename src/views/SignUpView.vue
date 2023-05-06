@@ -1,32 +1,43 @@
 <template>
-  <h4>Create your account</h4>
-  <form @submit.prevent>
-    <div>
-      <p>{{ isValidEmail }}</p>
-      <label for="email">Email</label><br />
+  <h1 class="personal-h1">Start organizing you life</h1>
+  <h2 class="personal-h2">Achieve your goals.</h2>
+  <p class="personal-p">Doit is a new to-do-list app that will help you to organice your time better and achive your goals.</p>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+    <RouterLink to="/auth/sign-in" class="btn btn-outline-info btn-lg rounded-pill mt-5" >Sign In</RouterLink>
+    <RouterLink to="/auth/sign-up" class="btn btn-outline-info btn-lg rounded-pill mt-5">Sign Up</RouterLink>
+    </div>
+  <div class="container-sign">
+  <form @submit.prevent class="sing-up-form">
+    <div class="container-email">
+    <div >
+      <label for="email" class="personal-p">Email</label>
       <input
         v-model="userMail"
         type="email"
         id="email"
         name="email"
         placeholder="Enter your email"
+        class="form-control"
       />
     </div>
-    <div v-if="isValidEmail === false" class="inValid">Invalid email address</div>
+    <div v-if="isValidEmail === false" class="inValid" >Invalid email address</div>
     <div>
-      <label for="password">Password</label><br />
-      <input v-model="passwordEntered" type="password" id="password" name="password" />
+      <label for="password" class="personal-p">Password</label>
+      <input v-model="passwordEntered" type="password" id="password" name="password" class="form-control" />
     </div>
     <div v-if="isStrongPassword === false" class="inValid">The password is weak!</div>
     <div>
-      <label for="confirmPassword">Confirm password</label><br />
-      <input v-model="confirmPasEntered" type="password" id="confirmPassword" name="password" />
+      <label for="confirmPassword" class="personal-p">Confirm password</label>
+      <input v-model="confirmPasEntered" type="password" id="confirmPassword" name="password" class="form-control"/>
     </div>
-    <button @click="_sendNewUserToStore(userMail, passwordEntered)" type="submit">
-      Create Accoount!
+  </div>
+    <button @click="_sendNewUserToStore(userMail, passwordEntered)" type="submit" class="btn btn-outline-info btn-lg rounded-pill mt-5">
+      Create Accoount
     </button>
+  
   </form>
   <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
+</div>
 </template>
 
 <script>
@@ -67,7 +78,6 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signUp']),
-    ...mapActions(useTaskStore, ['_fetchAllTasks']),
 
     async _sendNewUserToStore(userMail, passwordEntered) {
       this.startValidation = true
@@ -95,11 +105,29 @@ export default {
 </script>
 
 <style scoped>
+h2{
+  margin-top: 4rem;
+}
+.sing-up-form{
+  width: 30%;
+  line-height: 3.5rem;
+}
+.container-email{
+  text-align: start;
+  margin-bottom: 1rem;
+}
 .valid {
   background-color: white;
 }
 
 .inValid {
   color: darkred;
+}
+
+.container-sign {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

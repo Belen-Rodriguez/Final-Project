@@ -1,6 +1,7 @@
 <template>
+      <h2 v-if="user">{{ `Hi ${user.email}` }}</h2>
+    <h2 v-else>Sign in to start adventure!</h2>
   <div class="container-sign">
-    <h4>Sign In</h4>
     <form @submit.prevent class="container-form-sign">
       <div>
         <label for="email">Email</label><br />
@@ -17,7 +18,9 @@
       <div>
         <label for="password">Password</label><br />
         <input v-model="passwordEntered" type="password" id="password" name="password" />
-        <button @click="_sendUserToStore(userMail, passwordEntered)" type="submit">Log in!</button>
+        <div class="d-grid d-md-flex justify-content-md-center">
+        <button class="btn btn-outline-info" @click="_sendUserToStore(userMail, passwordEntered)" type="submit">Log in!</button>
+      </div>
       </div>
     </form>
     <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
@@ -51,7 +54,6 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signIn']),
-    ...mapActions(useTaskStore, ['_fetchAllTasks']),
 
     async _sendUserToStore(userMail, passwordEntered) {
       this.startValidation = true
@@ -93,11 +95,6 @@ button {
   display: block;
   margin: 1rem;
   padding: 0.2rem 1rem;
-  text-decoration: none;
-  color: rgba(82, 147, 126, 0.479);
-  background-color: white;
-  border: 2px;
-  border-color: rgba(82, 147, 126, 0.479);
-  font-size: 1.5rem;
+ 
 }
 </style>
