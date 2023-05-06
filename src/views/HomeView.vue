@@ -1,8 +1,8 @@
 <template>
+    <navBar/>
+    <tableTask />
+    <footerView />
 
-      <h2 v-if="user">{{ `Hi ${user.email}` }}</h2>
-      <button type="submit" @click="_handleSignOut()">Sign Out</button>
-      <tableTask />
 </template>
 
 <script>
@@ -10,6 +10,8 @@ import { useTaskStore } from '../stores/tasksStore'
 import userStore from '../stores/userStore'
 import { mapActions, mapState } from 'pinia'
 import tableTask from '../components/taskTable.vue'
+import navBar from '../components/navBar.vue'
+import footerView from '../components/footerView.vue'
 
 export default {
   name: 'HomeView',
@@ -18,12 +20,15 @@ export default {
     }
   },
   components: {
-    tableTask
+    tableTask,
+    navBar,
+    footerView
   },
 
   computed: {
     ...mapState(useTaskStore, ['listOfTasks']),
     ...mapState(userStore, ['user']),
+
   },
 
   methods: {
@@ -31,11 +36,6 @@ export default {
       '_fetchAllTasks'
     ]),
     ...mapActions(userStore, ['signOut']),
-
-    async _handleSignOut() {
-      await this.signOut()
-      this.$router.push({ path: '/auth' })
-    },
 
   },
   async created() {
@@ -45,4 +45,5 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

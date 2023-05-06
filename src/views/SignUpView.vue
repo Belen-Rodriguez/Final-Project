@@ -1,43 +1,65 @@
-<template>
+<template class="container">
   <h1 class="personal-h1">Start organizing you life</h1>
-  <h2 class="personal-h2">Achieve your goals.</h2>
-  <p class="personal-p">Doit is a new to-do-list app that will help you to organice your time better and achive your goals.</p>
-  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-    <RouterLink to="/auth/sign-in" class="btn btn-outline-info btn-lg rounded-pill mt-5" >Sign In</RouterLink>
-    <RouterLink to="/auth/sign-up" class="btn btn-outline-info btn-lg rounded-pill mt-5">Sign Up</RouterLink>
-    </div>
-  <div class="container-sign">
-  <form @submit.prevent class="sing-up-form">
-    <div class="container-email">
-    <div >
-      <label for="email" class="personal-p">Email</label>
-      <input
-        v-model="userMail"
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Enter your email"
-        class="form-control"
-      />
-    </div>
-    <div v-if="isValidEmail === false" class="inValid" >Invalid email address</div>
-    <div>
-      <label for="password" class="personal-p">Password</label>
-      <input v-model="passwordEntered" type="password" id="password" name="password" class="form-control" />
-    </div>
-    <div v-if="isStrongPassword === false" class="inValid">The password is weak!</div>
-    <div>
-      <label for="confirmPassword" class="personal-p">Confirm password</label>
-      <input v-model="confirmPasEntered" type="password" id="confirmPassword" name="password" class="form-control"/>
-    </div>
+  <h2 class="personal-h2">Doït · Achieve your goals ·</h2>
+  <p class="personal-p">
+    Doït is a new to-do-list app that will help you to organice your time better and achive your
+    goals.
+  </p>
+  <div class="d-grid gap-2 d-sm-flex justify-content-center">
+    <RouterLink to="/auth/sign-in" class="btn btn-outline-info rounded-pill mt-2"
+      >Sign In</RouterLink
+    >
+    <RouterLink to="/auth/sign-up" class="btn btn-outline-info rounded-pill mt-2"
+      >Sign Up</RouterLink
+    >
   </div>
-    <button @click="_sendNewUserToStore(userMail, passwordEntered)" type="submit" class="btn btn-outline-info btn-lg rounded-pill mt-5">
-      Create Accoount
-    </button>
-  
-  </form>
-  <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
-</div>
+  <div class="container-sign">
+    <form @submit.prevent class="sing-upIn-form">
+      <div class="container-email">
+        <div>
+          <label for="email" class="personal-p">Email</label>
+          <input
+            v-model="userMail"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            class="form-control"
+          />
+        </div>
+        <div v-if="isValidEmail === false" class="inValid">Invalid email address</div>
+        <div>
+          <label for="password" class="personal-p">Password</label>
+          <input
+            v-model="passwordEntered"
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+          />
+        </div>
+        <div v-if="isStrongPassword === false" class="inValid">The password is weak!</div>
+        <div>
+          <label for="confirmPassword" class="personal-p">Confirm password</label>
+          <input
+            v-model="confirmPasEntered"
+            type="password"
+            id="confirmPassword"
+            name="password"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <button
+        @click="_sendNewUserToStore(userMail, passwordEntered)"
+        type="submit"
+        class="btn btn-outline-info btn-lg rounded-pill mt-5 mb-3"
+      >
+        Create Accoount
+      </button>
+    </form>
+    <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
+  </div>
 </template>
 
 <script>
@@ -105,16 +127,16 @@ export default {
 </script>
 
 <style scoped>
-h2{
-  margin-top: 4rem;
+h2 {
+  margin-top: 2.5rem;
 }
-.sing-up-form{
+.sing-upIn-form {
   width: 30%;
-  line-height: 3.5rem;
+  line-height: 3rem;
 }
-.container-email{
+.container-email {
   text-align: start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .valid {
   background-color: white;
@@ -125,7 +147,7 @@ h2{
 }
 
 .container-sign {
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

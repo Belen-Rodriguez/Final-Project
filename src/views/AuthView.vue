@@ -8,14 +8,13 @@
 </template>
 
 <script>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import { mapState } from 'pinia'
 import userStore from '../stores/userStore'
 
 export default{
     name: 'AuthView',
     components: {
-        RouterLink,
         RouterView
     },
     computed: {
@@ -40,4 +39,5 @@ h2 {
     color:rgba(20, 35, 30, 0.479);
     border-radius: 45%;
 }
+
 </style>
