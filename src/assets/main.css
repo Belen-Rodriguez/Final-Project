@@ -29,3 +29,9 @@
   font-size: 1rem;
   font-weight: 300;
 }
+.white {
+  color: white
+}
+.bold {
+  font-weight: bold;
+}

@@ -1,4 +1,5 @@
-<template class="container">
+<template>
+  <div class="contenedorSign">
   <h1 class="personal-h1">Start organizing you life</h1>
   <h2 class="personal-h2">Doït · Achieve your goals ·</h2>
   <p class="personal-p">
@@ -60,6 +61,7 @@
     </form>
     <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
   </div>
+</div>
 </template>
 
 <script>
@@ -127,6 +129,9 @@ export default {
 </script>
 
 <style scoped>
+.contenedorSign{
+  padding: 3rem;
+}
 h2 {
   margin-top: 2.5rem;
 }
@@ -151,5 +156,8 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+h1{
+  margin-top: 5rem;
 }
 </style>

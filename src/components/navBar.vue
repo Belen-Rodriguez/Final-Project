@@ -6,7 +6,7 @@
       <button
         type="submit"
         @click="_handleSignOut()"
-        class="btn btn-outline-info rounded-pill btn-sm"
+        class="btn btn-primary rounded-pill btn-sm"
       >
         Sign Out
       </button>
@@ -50,11 +50,19 @@ export default {
   grid-template-columns: 55% 20% 15%;
   grid-column-gap: 5%;
   margin-bottom: 3rem;
+  align-items: center;
 }
 .container-button {
   text-align: end;
 }
 .navBar p {
+
+}
+.personal-p{
   text-align: end;
+  margin: 0
+}
+.personal-h3{
+  margin:0;
 }
 </style>
