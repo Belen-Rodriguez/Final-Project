@@ -1,0 +1,12 @@
+// Custom.scss
+// update variable
+
+
+$theme-colors: (
+
+  "info": rgb(64, 91, 112)
+);
+
+// Option A: Include all of Bootstrap
+
+@import "node_modules/bootstrap/scss/bootstrap";

@@ -3,10 +3,7 @@
     <nav>
       <!--RouterLink to="/auth">Authorization</RouterLink-->
       <!-- revisar porque necesita actualizar, si hay que usar el getter-->
-
-      <h2 v-if="user">{{ `Hi ${user.email}` }}</h2>
-      <h2 v-else>To start the adventure enter your account!</h2>
-      <RouterLink to="/">Home</RouterLink>
+     <!-- <RouterLink to="/">Home</RouterLink> -->
     </nav>
   </header>
   <RouterView />
@@ -16,26 +13,15 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
-import { useTaskStore } from './stores/tasksStore'
-import userStore from './stores/userStore'
-import { mapActions, mapState } from 'pinia'
 
 export default {
   name: 'App',
 
-  components: {},
-  computed: {
-    ...mapState(useTaskStore, ['listOfTasks', 'taskCount']),
-    ...mapState(userStore, ['user', 'userCount','userEmail']),
-  },
-  methods: {
-    ...mapActions(useTaskStore, ['_fetchAllTasks']),
-    ...mapActions(userStore, ['_fetchUser'])
-  },
-  async created() {
-    console.log('Created App View')
-    console.log(this.user)
-  },
+  components: {
+        RouterLink,
+        RouterView
+    },
+
 }
 
 

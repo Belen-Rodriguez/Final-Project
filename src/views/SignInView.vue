@@ -1,26 +1,59 @@
 <template>
-  <div class="container-sign">
-    <h4>Sign In</h4>
-    <form @submit.prevent class="container-form-sign">
-      <div>
-        <label for="email">Email</label><br />
-        <input
-          v-model="userMail"
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-        />
-      </div>
-      <p v-if="isValidEmail === false" class="inValid">Invalid email address</p>
+  <div class="contenedorSign">
+    <h1 class="personal-h1">Sign in to start adventure</h1>
+    <h2 class="personal-h2">Doït · Achieve your goals ·</h2>
+    <p class="personal-p">
+      Doit is a new to-do-list app that will help you to organice your time better and achive your
+      goals.
+    </p>
+    <div class="d-grid gap-2 d-flex justify-content-center containerBtnS">
+      <RouterLink to="/auth/sign-in" class="btn btn-outline-info rounded-pill mt-2"
+        >Sign In</RouterLink
+      >
+      <RouterLink to="/auth/sign-up" class="btn btn-outline-info rounded-pill mt-2"
+        >Sign Up</RouterLink
+      >
+    </div>
 
-      <div>
-        <label for="password">Password</label><br />
-        <input v-model="passwordEntered" type="password" id="password" name="password" />
-        <button @click="_sendUserToStore(userMail, passwordEntered)" type="submit">Log in!</button>
-      </div>
-    </form>
-    <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
+    <div class="container-sign">
+      <form @submit.prevent class="sing-upIn-form">
+        <div class="container-email">
+          <div>
+            <label for="email" class="personal-p">Email</label><br />
+            <input
+              v-model="userMail"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              class="form-control inputEmail"
+            />
+          </div>
+          <p v-if="isValidEmail === false" class="inValid">Invalid email address</p>
+
+          <div>
+            <label for="password" class="personal-p">Password</label><br />
+            <input
+              v-model="passwordEntered"
+              type="password"
+              id="password"
+              name="password"
+              class="form-control inputEmail"
+            />
+          </div>
+          <div class="d-grid d-flex justify-content-center">
+            <button
+              class="btn btn-outline-info btn-lg rounded-pill mt-5 mb-3"
+              @click="_sendUserToStore(userMail, passwordEntered)"
+              type="submit"
+            >
+              Log in!
+            </button>
+          </div>
+        </div>
+      </form>
+      <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
+    </div>
   </div>
 </template>
 
@@ -51,7 +84,6 @@ export default {
   },
   methods: {
     ...mapActions(userStore, ['signIn']),
-    ...mapActions(useTaskStore, ['_fetchAllTasks']),
 
     async _sendUserToStore(userMail, passwordEntered) {
       this.startValidation = true
@@ -60,44 +92,80 @@ export default {
         this.$router.push({ path: '/' })
         this.userMail = ''
         this.passwordEntered = ''
-      }
-      catch (error){
+      } catch (error) {
         console.log(error)
         this.errorMsg = 'Invalid credentials, please enter your details again.'
       }
-
     }
   }
 }
 </script>
 
 <style scoped>
+.contenedorSign {
+  padding: 3rem;
+}
+
+h2 {
+  margin-top: 2.5rem;
+}
+.sing-upIn-form {
+  width: 30%;
+  line-height: 3rem;
+  text-align: center;
+}
+.container-email {
+  text-align: start;
+  margin-bottom: 0.5rem;
+}
+.valid {
+  background-color: white;
+}
+
 .inValid {
   color: darkred;
 }
+
 .container-sign {
+  margin-top: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2rem;
+  justify-content: center;
 }
-.container-form-sign {
-  width: 20rem;
-  text-align: center;
-  margin-top: 1rem;
+h1 {
+  margin-top: 5rem;
 }
-input {
-  width: 100%;
+
+@media (min-width: 480px) and (max-width: 770px) {
+  .personal-h1 {
+    font-size: 6.5rem;
+    padding: 0rem 3rem 1.5rem;
+  }
+  .personal-p {
+    padding: 0rem 0rem 1rem;
+  }
 }
-button {
-  display: block;
-  margin: 1rem;
-  padding: 0.2rem 1rem;
-  text-decoration: none;
-  color: rgba(82, 147, 126, 0.479);
-  background-color: white;
-  border: 2px;
-  border-color: rgba(82, 147, 126, 0.479);
-  font-size: 1.5rem;
+
+@media (max-width: 479px) {
+  body {
+    max-width: 480px;
+  }
+  .personal-h1 {
+    font-size: 4rem;
+    margin-top: 3rem;
+  }
+  .container-sign {
+    margin-top: 3.5rem;
+  }
+  .containerBtnS {
+    margin-top: 2rem;
+  }
+  .inputEmail {
+    width: 20rem;
+  }
+  .sing-upIn-form {
+    width: 60%;
+  }
 }
 </style>
