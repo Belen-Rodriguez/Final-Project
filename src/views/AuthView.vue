@@ -2,7 +2,7 @@
 
     <div class="container-auth">
     <RouterView />
-
+    <footerView />
     </div>
 
 </template>
@@ -11,11 +11,13 @@
 import { RouterView } from 'vue-router'
 import { mapState } from 'pinia'
 import userStore from '../stores/userStore'
+import footerView from '../components/footerView.vue'
 
 export default{
     name: 'AuthView',
     components: {
-        RouterView
+        RouterView,
+        footerView
     },
     computed: {
     ...mapState(userStore, ['user']),

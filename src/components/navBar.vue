@@ -43,7 +43,7 @@ export default {
 
 <style scoped>
 .navBar {
-  padding: 0rem 2rem;
+  padding: 0rem 3rem;
   height: auto;
   width: 100%;
   display: grid;
@@ -55,9 +55,7 @@ export default {
 .container-button {
   text-align: end;
 }
-.navBar p {
 
-}
 .personal-p{
   text-align: end;
   margin: 0
@@ -65,4 +63,15 @@ export default {
 .personal-h3{
   margin:0;
 }
+@media (max-width: 479px) {
+  body {
+    max-width: 480px;
+  }
+  .navBar {
+  display: grid;
+  grid-template-columns: 40% 30% 20%;
+  grid-column-gap: 5%;
+}
+}
+
 </style>

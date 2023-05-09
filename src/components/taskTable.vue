@@ -5,37 +5,37 @@
     <div class="containerTable">
       <table>
         <tr v-for="task in showedList" :key="task.id" class="tableRow">
-          
-            <td>
+          <td>
             <input
               type="checkbox"
               :checked="task.is_complete"
               @change="_changeStatus(task, $event.target.checked)"
             />
-            </td>
-            <td v-if="task.id === selectedTaskId && openInputStatus">
+          </td>
+          <td v-if="task.id === selectedTaskId && openInputStatus">
             <div>
-            <input
-              type="text"
-              v-model="newTitle"
-              @keydown.enter="_changeDataStore(task, newTitle)"
-              class="personal-p form-control rounded-pill"
-            />
-            <button
-              @click="_changeDataStore(task, newTitle)"
-              class="btn btn-outline-info rounded-pill"
-            >
-              Save
-            </button>
-          </div>
-            </td>
-            <td v-else class="personal-p">{{ task.title }}</td>
-  
-          <td>
-            <button @click="_deleteTask(task.title)" class="btn btn-outline-info rounded-circle"><i class="bi bi-x"></i>
+              <input
+                type="text"
+                v-model="newTitle"
+                @keydown.enter="_changeDataStore(task, newTitle)"
+                class="personal-p form-control rounded-pill"
+              />
+              <button
+                @click="_changeDataStore(task, newTitle)"
+                class="btn btn-outline-info rounded-pill"
+              >
+                Save
+              </button>
+            </div>
+          </td>
+          <td v-else class="personal-p">{{ task.title }}</td>
+
+          <td class="cngBtn">
+            <button @click="_deleteTask(task.title)" class="btn btn-outline-info rounded-circle">
+              <i class="bi bi-x"></i>
             </button>
           </td>
-          <td>
+          <td class="cngBtn">
             <button @click="_openInput(task)" class="btn btn-outline-info rounded-pill">
               Change
             </button>
@@ -86,8 +86,8 @@
         </td>
         <td class="personal-p white">{{ task.title }}</td>
         <td>
-          <button @click="_deleteTask(task.title)" class="btn btn-outline-light rounded-circle"><i class="bi bi-x"></i>
-
+          <button @click="_deleteTask(task.title)" class="btn btn-outline-light rounded-circle">
+            <i class="bi bi-x"></i>
           </button>
         </td>
       </tr>
@@ -112,7 +112,7 @@ export default {
       newTitle: '',
       openInputAddStatus: false,
       taskDoneList: false,
-      msgShowDone: 'Show task done'
+      msgShowDone: 'Show done tasks'
     }
   },
 
@@ -153,10 +153,10 @@ export default {
     _openTaskDone() {
       if (!this.taskDoneList) {
         this.taskDoneList = true
-        this.msgShowDone = 'Hide task done'
+        this.msgShowDone = 'Hide done tasks'
       } else {
         this.taskDoneList = false
-        this.msgShowDone = 'Show task done'
+        this.msgShowDone = 'Show done tasks'
       }
     }
   }
@@ -178,9 +178,12 @@ export default {
 .tableRow {
   width: 60vw;
   display: grid;
-  grid-template-columns: 5% 60% 10% 20%;
-  grid-gap: 2%;
+  grid-template-columns: 5% 70% 5% 10%;
+  grid-gap: 3%;
   line-height: 3rem;
+}
+.cngBtn {
+  text-align: end;
 }
 .tableRowDelete {
   width: 60vw;
@@ -209,9 +212,37 @@ export default {
 h1 {
   margin-bottom: 3rem;
   font-size: 6rem;
+  text-align: center;
 }
 .buttonNew {
   margin-top: 3rem;
   gap: 2rem;
+}
+
+@media (min-width: 480px) and (max-width: 770px) {
+  h1 {
+    font-size: 5rem;
+  }
+  .tableRow {
+    display: grid;
+    grid-template-columns: 5% 62% 8% 15%;
+    grid-gap: 3%;
+  }
+}
+
+@media (max-width: 479px) {
+  body {
+    max-width: 480px;
+  }
+  h1 {
+    font-size: 3.5rem;
+  }
+  .tableRow {
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 5% 55% 10% 20%;
+    grid-gap: 3%;
+    line-height: 3rem;
+  }
 }
 </style>

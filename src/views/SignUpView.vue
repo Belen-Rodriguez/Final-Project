@@ -6,7 +6,7 @@
     Doït is a new to-do-list app that will help you to organice your time better and achive your
     goals.
   </p>
-  <div class="d-grid gap-2 d-sm-flex justify-content-center">
+  <div class="d-grid gap-2 d-flex justify-content-center containerBtnS">
     <RouterLink to="/auth/sign-in" class="btn btn-outline-info rounded-pill mt-2"
       >Sign In</RouterLink
     >
@@ -160,4 +160,37 @@ h2 {
 h1{
   margin-top: 5rem;
 }
+@media (min-width: 480px) and (max-width: 770px) {
+
+h1 {
+  font-size: 6.5rem;
+  padding: 0rem 3rem 1.5rem;
+}
+.personal-p{
+  padding: 0rem 0rem 1rem
+}
+}
+@media (max-width: 479px) {
+  body {
+    max-width: 480px;
+  }
+  .personal-h1 {
+    font-size: 4rem;
+    margin-top: 3rem;
+  }
+  .container-sign {
+    margin-top: 3.5rem;
+  }
+  .containerBtnS {
+    margin-top: 2rem;
+  }
+  .inputEmail {
+    width: 20rem;
+  }
+  .sing-upIn-form {
+    width: 60%;
+  }
+
+}
+
 </style>
