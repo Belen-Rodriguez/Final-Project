@@ -1,36 +1,32 @@
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/auth">Authorization</RouterLink>
-      </nav>
+    <nav>
+      <!--RouterLink to="/auth">Authorization</RouterLink-->
+      <!-- revisar porque necesita actualizar, si hay que usar el getter-->
+     <!-- <RouterLink to="/">Home</RouterLink> -->
+    </nav>
   </header>
   <RouterView />
   <body>
-    <ul>
-      <li v-for="task in tasksStore.tasks">{{ task }}
-      </li>
-    </ul>
-    <p>{{ tasksStore.taskCount }}</p>
-    <button @click="tasksStore.addTask('NewTask')">Add</button>
   </body>
 </template>
 
 <script>
-import { RouterLink, RouterView } from 'vue-router';
-import { useTaskStore } from './stores/tasksStore'
-import { mapStores } from 'pinia';
-export default {
-    name: 'App',
-    components: {
-        
-    },
-    computed: {
-      ...mapStores(useTaskStore)
-    }
-};
-</script>
+import { RouterLink, RouterView } from 'vue-router'
 
+export default {
+  name: 'App',
+
+  components: {
+        RouterLink,
+        RouterView
+    },
+
+}
+
+
+
+</script>
 
 <style scoped>
 header {
@@ -67,6 +63,4 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
-
 </style>
