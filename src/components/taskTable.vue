@@ -5,14 +5,16 @@
     <div class="containerTable">
       <table>
         <tr v-for="task in showedList" :key="task.id" class="tableRow">
-          <td>
+          <!--Check-->
+          <td align="left">
             <input
               type="checkbox"
               :checked="task.is_complete"
               @change="_changeStatus(task, $event.target.checked)"
             />
           </td>
-          <td v-if="task.id === selectedTaskId && openInputStatus">
+          <!--Tarea-->
+          <td v-if="task.id === selectedTaskId && openInputStatus" align="left">
             <div>
               <input
                 type="text"
@@ -28,18 +30,29 @@
               </button>
             </div>
           </td>
-          <td v-else class="personal-p">{{ task.title }}</td>
-
-          <td class="cngBtn">
+          <td v-else class="personal-p" align="left">{{ task.title }}</td>
+          <!--Boton 3 puntosMobil-->
+          <div class="containerChangeDelete">
+          <td class="abrirMenu" align="rigth">
+            <button @click="_openMenu(task)" class="btn btn-outline-info rounded-circle">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </td>
+          <!--Boton Delete-->
+          
+          <td :class="`cngBtn ${_showBtn(task)}`" align="rigth">
             <button @click="_deleteTask(task.title)" class="btn btn-outline-info rounded-circle">
               <i class="bi bi-x"></i>
             </button>
           </td>
-          <td class="cngBtn">
+          <!--Boton Cambiar-->
+          <td :class="`cngBtn ${_showBtn(task)}`" align="rigth">
             <button @click="_openInput(task)" class="btn btn-outline-info rounded-pill">
               Change
             </button>
           </td>
+          </div>
+
         </tr>
       </table>
 
@@ -77,7 +90,7 @@
     </div>
     <table v-if="taskDoneList" class="containerTableDelete">
       <tr v-for="task in showedListTrue" :key="task.id" class="tableRowDelete">
-        <td>
+        <td >
           <input
             type="checkbox"
             :checked="task.is_complete"
@@ -93,6 +106,7 @@
       </tr>
     </table>
   </section>
+  <p>{{ screenMobile }}</p>
 </template>
 
 <script>
@@ -112,7 +126,8 @@ export default {
       newTitle: '',
       openInputAddStatus: false,
       taskDoneList: false,
-      msgShowDone: 'Show done tasks'
+      msgShowDone: 'Show done tasks',
+      mobileBtnStatus: true,
     }
   },
 
@@ -124,6 +139,9 @@ export default {
     },
     showedListTrue() {
       return this.listOfTasks.filter((task) => task.is_complete === true)
+    },
+    screenMobile() {
+      return document.body.clientWidth < 479 ? true : false
     }
   },
 
@@ -158,6 +176,23 @@ export default {
         this.taskDoneList = false
         this.msgShowDone = 'Show done tasks'
       }
+    },
+    _openMenu(task) {
+      this.mobileBtnStatus = !this.mobileBtnStatus
+      if (this.mobileBtnStatus === false)
+      { this.selectedTaskId = task.id}
+
+      else { 
+        this.selectedTaskId = ''
+      }
+
+      console.log(this.mobileBtnStatus)
+      console.log(this.showButtonsDC)
+    },
+   _showBtn(task){
+      if (this.mobileBtnStatus === false && this.selectedTaskId === task.id) 
+      {return 'visible'}
+      else {return ''}
     }
   }
 }
@@ -173,18 +208,17 @@ export default {
   justify-content: center;
   width: 60%;
   margin: auto;
-}
 
+}
+/* 
 .tableRow {
   width: 60vw;
   display: grid;
   grid-template-columns: 5% 70% 5% 10%;
   grid-gap: 3%;
   line-height: 3rem;
-}
-.cngBtn {
-  text-align: end;
-}
+} */
+
 .tableRowDelete {
   width: 60vw;
   display: grid;
@@ -218,16 +252,25 @@ h1 {
   margin-top: 3rem;
   gap: 2rem;
 }
+.abrirMenu{
+  display: none
+}
+td {
+  padding: 0.5rem;
+}
+td {
+  vertical-align: baseline;
+}
 
 @media (min-width: 480px) and (max-width: 770px) {
   h1 {
     font-size: 5rem;
   }
-  .tableRow {
+  /* .tableRow {
     display: grid;
     grid-template-columns: 5% 62% 8% 15%;
     grid-gap: 3%;
-  }
+  } */
 }
 
 @media (max-width: 479px) {
@@ -237,12 +280,44 @@ h1 {
   h1 {
     font-size: 3.5rem;
   }
-  .tableRow {
-    width: 80vw;
-    display: grid;
-    grid-template-columns: 5% 55% 10% 20%;
-    grid-gap: 3%;
-    line-height: 3rem;
+  .section1{
+    width: 80%;
   }
+  /* .tableRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    line-height: 3rem;
+  } */
+  .cngBtn {
+  display: none
+}
+.abrirMenu{
+  display: block;
+
+}
+.cngBtn.visible {
+  display: block
+}
+.containerChangeDelete{
+  display: flex;
+  flex-direction: column;
+ }
+ /*
+td {
+    text-align: center;
+}
+
+tr td:first-child {
+    text-align: left;
+}
+
+
+tr td:last-child {
+    text-align: right;
+} */
+
+
+
 }
 </style>
