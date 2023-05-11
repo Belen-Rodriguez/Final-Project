@@ -69,7 +69,7 @@ export default {
   }
   .navBar {
   display: grid;
-  grid-template-columns: 40% 30% 20%;
+  grid-template-columns: 30% 35% 25%;
   grid-column-gap: 5%;
 }
 }
