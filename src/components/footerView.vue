@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="fixed">
     <p class="personal-p bold">· Doït ·</p>
     <p class="personal-p2">Ironhack - C/ de Pamplona, 96, 08018 Barcelona</p>
   </footer>
@@ -9,20 +9,26 @@
 
 <style scoped>
 footer {
-  margin-top: 2rem;
+  padding-top: 1.5rem;
   height: auto;
   width: 100%;
-  display: grid;
-  grid-template-columns: 35% 60%;
-  grid-gap:2%;
+  display: flex;
+  flex-direction: row;
+  gap:2%;
+  justify-content: center;
   align-items: center;
-
+  background-color: white;
 }
 .personal-p{
     text-align: end;
 }
 .personal-p2{
     text-align: start;
+}
+
+.fixed{
+    position: fixed;
+    bottom: 0;
 }
 @media (max-width: 479px) {
   body {
@@ -36,5 +42,12 @@ footer {
   grid-gap:5%;
   align-items: center;
 }
+.personal-p2{
+  font-size: 0.8rem;
 }
+.fixed{
+    position: relative;
+}
+}
+
 </style>

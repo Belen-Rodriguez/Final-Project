@@ -157,13 +157,14 @@ h1 {
   }
   .container-sign {
     margin-top: 3.5rem;
+
   }
   .containerBtnS {
     margin-top: 2rem;
   }
-  .inputEmail {
+  /*.inputEmail {
     width: 20rem;
-  }
+  }*/
   .sing-upIn-form {
     width: 60%;
   }
