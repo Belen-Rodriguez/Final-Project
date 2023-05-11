@@ -6,7 +6,7 @@
       <table>
         <tr v-for="task in showedList" :key="task.id" class="tableRow">
           <!--Check-->
-          <td align="left">
+          <td>
             <input
               type="checkbox"
               :checked="task.is_complete"
@@ -14,14 +14,15 @@
             />
           </td>
           <!--Tarea-->
-          <td v-if="task.id === selectedTaskId && openInputStatus" align="left">
-            <div>
+          <td v-if="task.id === selectedTaskId && openInputStatus">
+            <div class="btnInputSave">
               <input
                 type="text"
                 v-model="newTitle"
                 @keydown.enter="_changeDataStore(task, newTitle)"
                 class="personal-p form-control rounded-pill"
               />
+              <!--Boton Save-->
               <button
                 @click="_changeDataStore(task, newTitle)"
                 class="btn btn-outline-info rounded-pill"
@@ -30,29 +31,28 @@
               </button>
             </div>
           </td>
-          <td v-else class="personal-p" align="left">{{ task.title }}</td>
+          <td v-else class="personal-p">{{ task.title }}</td>
           <!--Boton 3 puntosMobil-->
           <div class="containerChangeDelete">
-          <td class="abrirMenu" align="rigth">
-            <button @click="_openMenu(task)" class="btn btn-outline-info rounded-circle">
-              <i class="bi bi-three-dots-vertical"></i>
-            </button>
-          </td>
-          <!--Boton Delete-->
-          
-          <td :class="`cngBtn ${_showBtn(task)}`" align="rigth">
-            <button @click="_deleteTask(task.title)" class="btn btn-outline-info rounded-circle">
-              <i class="bi bi-x"></i>
-            </button>
-          </td>
-          <!--Boton Cambiar-->
-          <td :class="`cngBtn ${_showBtn(task)}`" align="rigth">
-            <button @click="_openInput(task)" class="btn btn-outline-info rounded-pill">
-              Change
-            </button>
-          </td>
-          </div>
+            <td class="abrirMenu">
+              <button @click="_openMenu(task)" class="btn btn-outline-info rounded-circle btn-sm">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+            </td>
+            <!--Boton Delete-->
 
+            <td :class="`cngBtn ${_showBtn(task)}`">
+              <button @click="_deleteTask(task.title)" class="btn btn-outline-info rounded-pill MvlDCButton">
+               {{ titleDelete }} <i v-if="!titleDelete" class="bi bi-x"></i>
+              </button>
+            </td>
+            <!--Boton Cambiar-->
+            <td :class="`cngBtn ${_showBtn(task)}`">
+              <button @click="_openInput(task)" class="btn btn-outline-info rounded-pill MvlDCButton">
+                Change
+              </button>
+            </td>
+          </div>
         </tr>
       </table>
 
@@ -79,6 +79,7 @@
           </button>
         </div>
       </div>
+
     </div>
     <!--SECTION 2 - TABLA DONE-->
   </section>
@@ -90,7 +91,7 @@
     </div>
     <table v-if="taskDoneList" class="containerTableDelete">
       <tr v-for="task in showedListTrue" :key="task.id" class="tableRowDelete">
-        <td >
+        <td>
           <input
             type="checkbox"
             :checked="task.is_complete"
@@ -105,8 +106,8 @@
         </td>
       </tr>
     </table>
+
   </section>
-  <p>{{ screenMobile }}</p>
 </template>
 
 <script>
@@ -128,6 +129,7 @@ export default {
       taskDoneList: false,
       msgShowDone: 'Show done tasks',
       mobileBtnStatus: true,
+      titleDelete: ''
     }
   },
 
@@ -179,20 +181,23 @@ export default {
     },
     _openMenu(task) {
       this.mobileBtnStatus = !this.mobileBtnStatus
-      if (this.mobileBtnStatus === false)
-      { this.selectedTaskId = task.id}
-
-      else { 
+      if (this.mobileBtnStatus === false) {
+        this.selectedTaskId = task.id
+      } else {
         this.selectedTaskId = ''
       }
 
       console.log(this.mobileBtnStatus)
       console.log(this.showButtonsDC)
     },
-   _showBtn(task){
-      if (this.mobileBtnStatus === false && this.selectedTaskId === task.id) 
-      {return 'visible'}
-      else {return ''}
+    _showBtn(task) {
+      if (this.mobileBtnStatus === false && this.selectedTaskId === task.id) {
+        this.titleDelete = 'Delete'
+        return 'visible'
+      } else {
+        this.titleDelete = ''
+        return ''
+      }
     }
   }
 }
@@ -208,25 +213,9 @@ export default {
   justify-content: center;
   width: 60%;
   margin: auto;
-
-}
-/* 
-.tableRow {
-  width: 60vw;
-  display: grid;
-  grid-template-columns: 5% 70% 5% 10%;
-  grid-gap: 3%;
-  line-height: 3rem;
-} */
-
-.tableRowDelete {
-  width: 60vw;
-  display: grid;
-  grid-template-columns: 5% 80% 10%;
-  grid-gap: 2%;
-  line-height: 3rem;
 }
 .section2 {
+  width: 100%;
   margin-top: 3rem;
   padding: 3rem;
   min-height: 20rem;
@@ -240,39 +229,74 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.containerTableDelete {
-  margin-top: 2rem;
-}
 h1 {
   margin-bottom: 3rem;
   font-size: 6rem;
   text-align: center;
 }
+.containerTableDelete {
+  margin-top: 2rem;
+}
+
+table {
+  width: 60vw;
+  margin: auto;
+}
+.tableRowDelete {
+  width: 60vw;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 5% 80% 10%;
+  grid-gap: 2%;
+  line-height: 3rem;
+}
+
 .buttonNew {
   margin-top: 3rem;
   gap: 2rem;
 }
-.abrirMenu{
-  display: none
+.abrirMenu {
+  display: none;
 }
+
 td {
   padding: 0.5rem;
-}
-td {
   vertical-align: baseline;
+}
+.btnInputSave {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.containerChangeDelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: end;
+}
+tr td:first-child {
+  text-align: left;
+}
+
+tr td:nth-child(2) {
+  text-align: left;
+}
+
+tr td:nth-child(3) {
+  text-align: left;
+}
+tr td:nth-child(4) {
+  text-align: left;
+}
+tr td:last-child {
+  text-align: right;
 }
 
 @media (min-width: 480px) and (max-width: 770px) {
   h1 {
     font-size: 5rem;
   }
-  /* .tableRow {
-    display: grid;
-    grid-template-columns: 5% 62% 8% 15%;
-    grid-gap: 3%;
-  } */
 }
-
 @media (max-width: 479px) {
   body {
     max-width: 480px;
@@ -280,44 +304,53 @@ td {
   h1 {
     font-size: 3.5rem;
   }
-  .section1{
+  table {
+    width: 80vw;
+  }
+  .tableRowDelete {
+    width: 80vw;
+  }
+  .section1 {
     width: 80%;
   }
+  .cngBtn {
+    display: none;
+  }
+  .abrirMenu {
+    display: block;
+  }
+  .cngBtn.visible {
+    display: block;
+  }
+  .containerChangeDelete {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+  }
+  .MvlDCButton{
+    width: 6rem;
+  }
+
   /* .tableRow {
     width: 100%;
     display: flex;
     justify-content: space-between;
     line-height: 3rem;
   } */
-  .cngBtn {
-  display: none
-}
-.abrirMenu{
-  display: block;
 
-}
-.cngBtn.visible {
-  display: block
-}
-.containerChangeDelete{
-  display: flex;
-  flex-direction: column;
- }
- /*
-td {
-    text-align: center;
-}
-
-tr td:first-child {
-    text-align: left;
-}
-
-
-tr td:last-child {
-    text-align: right;
+  /* .tableRow {
+    display: grid;
+    grid-template-columns: 5% 62% 8% 15%;
+    grid-gap: 3%;
+  } */
+  /* 
+.tableRow {
+  width: 60vw;
+  display: grid;
+  grid-template-columns: 5% 70% 5% 10%;
+  grid-gap: 3%;
+  line-height: 3rem;
 } */
-
-
-
 }
 </style>
