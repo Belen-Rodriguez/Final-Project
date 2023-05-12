@@ -42,7 +42,7 @@
             class="form-control"
           />
         </div>
-        <div v-if="isStrongPassword === false" class="inValid">The password is weak!</div>
+        <div v-if="isStrongPassword === false" class="inValid">The password is weak</div>
         <div>
           <label for="confirmPassword" class="personal-p">Confirm password</label>
           <input
@@ -53,6 +53,7 @@
             class="form-control"
           />
         </div>
+        <div v-if="pasworNoMach" class="inValid">Passwords don't match</div>
       </div>
       <!--Boton Create account -->
       <button
@@ -82,7 +83,8 @@ export default {
       userMail: '',
       passwordEntered: '',
       confirmPasEntered: '',
-      errorMsg: ''
+      errorMsg: '',
+      pasworNoMach: ''
     }
   },
   components: {},
@@ -111,6 +113,9 @@ export default {
     async _sendNewUserToStore(userMail, passwordEntered) {
       this.startValidation = true
       if (
+        this.passwordEntered !== this.confirmPasEntered
+      ) { this.pasworNoMach = "Password don't match"}
+      if (
         this.isValidEmail === true &&
         this.isStrongPassword === true &&
         this.isPasswordConfirmed === true
@@ -118,6 +123,7 @@ export default {
         try {
           await this.signUp(userMail, passwordEntered)
           alert('Succesful registration')
+          this.$router.push({ path: '/' })
           this.userMail = ''
           this.passwordEntered = ''
           this.confirmPasEntered = ''
@@ -135,7 +141,7 @@ export default {
 
 <style scoped>
 .contenedorSign {
-  padding: 3rem 3rem 0rem 3rem;
+  padding: 3rem 3rem 1.5rem 3rem;
 }
 h2 {
   margin-top: 2.5rem;
@@ -163,7 +169,7 @@ h2 {
   align-items: center;
 }
 h1{
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 .containerBtnS{
     display: flex;

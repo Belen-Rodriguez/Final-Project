@@ -137,7 +137,7 @@ h2 {
   justify-content: center;
 }
 h1 {
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 .containerBtnS{
     display: flex;
