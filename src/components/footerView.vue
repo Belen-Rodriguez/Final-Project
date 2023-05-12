@@ -48,6 +48,9 @@ footer {
 .fixed{
     position: relative;
 }
+footer{
+  margin-top: 0.5rem;
+}
 }
 
 </style>

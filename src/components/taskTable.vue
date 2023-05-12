@@ -1,8 +1,9 @@
 <template>
   <!--SECTION 1 - TABLA TO DO LIST-->
   <section class="section1">
-    <h1 class="personal-h1">Just Doït</h1>
+    <h1 class="personal-h1">Doït List</h1>
     <div class="containerTable">
+      <h2 v-if="showedList.length === 0 " class="personal-h2">Add you a new task here!</h2>
       <table>
         <tr v-for="task in showedList" :key="task.id" class="tableRow">
           <!--Check-->
@@ -81,7 +82,7 @@
       </div>
 
     </div>
-    <!--SECTION 2 - TABLA DONE-->
+  <!--SECTION 2 - TABLA DONE-->
   </section>
   <section class="section2">
     <div>
@@ -89,6 +90,7 @@
         {{ msgShowDone }}
       </button>
     </div>
+    <!--Boton Tareas-->
     <table v-if="taskDoneList" class="containerTableDelete">
       <tr v-for="task in showedListTrue" :key="task.id" class="tableRowDelete">
         <td>
@@ -99,6 +101,7 @@
           />
         </td>
         <td class="personal-p white">{{ task.title }}</td>
+        <!--Boton Delete-->
         <td>
           <button @click="_deleteTask(task.title)" class="btn btn-outline-light rounded-circle">
             <i class="bi bi-x"></i>
@@ -217,7 +220,7 @@ export default {
 .section2 {
   width: 100%;
   margin-top: 3rem;
-  padding: 3rem;
+  padding: 3rem 3rem 6rem 3rem;
   min-height: 20rem;
   height: auto;
   display: flex;
@@ -234,12 +237,19 @@ h1 {
   font-size: 6rem;
   text-align: center;
 }
+.containerTable{
+  min-height: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
 .containerTableDelete {
   margin-top: 2rem;
 }
 
 table {
-  width: 60vw;
+  width: 50vw;
   margin: auto;
 }
 .tableRowDelete {
@@ -295,7 +305,18 @@ tr td:last-child {
 @media (min-width: 480px) and (max-width: 770px) {
   h1 {
     font-size: 5rem;
+    margin-top: 1rem;
   }
+  table {
+  width: 60vw;
+}
+.containerTable{
+  min-height: 25rem;
+}
+.section2{
+  height: auto;
+  min-height: 30rem;
+}
 }
 @media (max-width: 479px) {
   body {
@@ -304,6 +325,7 @@ tr td:last-child {
   h1 {
     font-size: 3.5rem;
   }
+
   table {
     width: 80vw;
   }
@@ -313,6 +335,11 @@ tr td:last-child {
   .section1 {
     width: 80%;
   }
+  .section2{
+  height: auto;
+  min-height: 25rem;
+}
+
   .cngBtn {
     display: none;
   }
@@ -332,25 +359,6 @@ tr td:last-child {
     width: 6rem;
   }
 
-  /* .tableRow {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    line-height: 3rem;
-  } */
 
-  /* .tableRow {
-    display: grid;
-    grid-template-columns: 5% 62% 8% 15%;
-    grid-gap: 3%;
-  } */
-  /* 
-.tableRow {
-  width: 60vw;
-  display: grid;
-  grid-template-columns: 5% 70% 5% 10%;
-  grid-gap: 3%;
-  line-height: 3rem;
-} */
 }
 </style>
