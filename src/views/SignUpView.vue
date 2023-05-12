@@ -141,7 +141,7 @@ export default {
 
 <style scoped>
 .contenedorSign {
-  padding: 3rem 3rem 0rem 3rem;
+  padding: 3rem 3rem 1.5rem 3rem;
 }
 h2 {
   margin-top: 2.5rem;
@@ -169,7 +169,7 @@ h2 {
   align-items: center;
 }
 h1{
-  margin-top: 5rem;
+  margin-top: 3.5rem;
 }
 .containerBtnS{
     display: flex;
