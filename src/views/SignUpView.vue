@@ -1,12 +1,14 @@
 <template>
+    <!--SIGN UP - Intro -->
   <div class="contenedorSign">
-  <h1 class="personal-h1">Start organizing you life</h1>
+  <h1 class="personal-h1">Start your organized life</h1>
   <h2 class="personal-h2">Doït · Achieve your goals ·</h2>
   <p class="personal-p">
     Doït is a new to-do-list app that will help you to organice your time better and achive your
     goals.
   </p>
-  <div class="d-grid gap-2 d-flex justify-content-center containerBtnS">
+  <!--Botones Sign In y Sign UP -->
+  <div class="containerBtnS">
     <RouterLink to="/auth/sign-in" class="btn btn-outline-info rounded-pill mt-2"
       >Sign In</RouterLink
     >
@@ -14,6 +16,7 @@
       >Sign Up</RouterLink
     >
   </div>
+  <!--Forulario -->
   <div class="container-sign">
     <form @submit.prevent class="sing-upIn-form">
       <div class="container-email">
@@ -51,10 +54,12 @@
           />
         </div>
       </div>
+      <!--Boton Create account -->
       <button
         @click="_sendNewUserToStore(userMail, passwordEntered)"
         type="submit"
-        class="btn btn-outline-info btn-lg rounded-pill mt-5 mb-3"
+        class="btn btn-outline-info btn-lg rounded-pill 
+         mb-3 btnCreateA"
       >
         Create Accoount
       </button>
@@ -129,8 +134,8 @@ export default {
 </script>
 
 <style scoped>
-.contenedorSign{
-  padding: 3rem;
+.contenedorSign {
+  padding: 3rem 3rem 0rem 3rem;
 }
 h2 {
   margin-top: 2.5rem;
@@ -160,6 +165,15 @@ h2 {
 h1{
   margin-top: 5rem;
 }
+.containerBtnS{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem
+  }
+  .btnCreateA{
+    margin-top: 2rem;
+  }
 @media (min-width: 480px) and (max-width: 770px) {
 
 h1 {
@@ -176,11 +190,14 @@ h1 {
   }
   .personal-h1 {
     font-size: 4rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
   .container-sign {
-    margin-top: 3.5rem;
+    margin-top: 1.5rem;
   }
+  .contenedorSign {
+  padding: 3rem 3rem 0rem 3rem;
+}
   .containerBtnS {
     margin-top: 2rem;
   }
@@ -188,9 +205,11 @@ h1 {
     width: 20rem;
   }
   .sing-upIn-form {
-    width: 60%;
+    width: 90%;
   }
-
+  .btnCreateA{
+    margin-top: 1.5rem;
+  }
 }
 
 </style>
