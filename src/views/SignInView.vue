@@ -1,4 +1,5 @@
 <template>
+  <!--SIGN IN - Intro -->
   <div class="contenedorSign">
     <h1 class="personal-h1">Sign in to start adventure</h1>
     <h2 class="personal-h2">Doït · Achieve your goals ·</h2>
@@ -6,7 +7,8 @@
       Doit is a new to-do-list app that will help you to organice your time better and achive your
       goals.
     </p>
-    <div class="d-grid gap-2 d-flex justify-content-center containerBtnS">
+    <!--Botones Sign In y Sign UP -->
+    <div class="containerBtnS">
       <RouterLink to="/auth/sign-in" class="btn btn-outline-info rounded-pill mt-2"
         >Sign In</RouterLink
       >
@@ -14,7 +16,7 @@
         >Sign Up</RouterLink
       >
     </div>
-
+    <!--Forulario -->
     <div class="container-sign">
       <form @submit.prevent class="sing-upIn-form">
         <div class="container-email">
@@ -30,7 +32,6 @@
             />
           </div>
           <p v-if="isValidEmail === false" class="inValid">Invalid email address</p>
-
           <div>
             <label for="password" class="personal-p">Password</label><br />
             <input
@@ -41,9 +42,10 @@
               class="form-control inputEmail"
             />
           </div>
+          <!--Boton Log in -->
           <div class="d-grid d-flex justify-content-center">
             <button
-              class="btn btn-outline-info btn-lg rounded-pill mt-5 mb-3"
+              class="btn btn-outline-info btn-lg rounded-pill mb-3 btnLogIn"
               @click="_sendUserToStore(userMail, passwordEntered)"
               type="submit"
             >
@@ -52,6 +54,7 @@
           </div>
         </div>
       </form>
+      <!--Error -->
       <p v-if="errorMsg !== false" class="inValid">{{ errorMsg }}</p>
     </div>
   </div>
@@ -103,7 +106,7 @@ export default {
 
 <style scoped>
 .contenedorSign {
-  padding: 3rem;
+  padding: 3rem 3rem 0rem 3rem;
 }
 
 h2 {
@@ -136,7 +139,15 @@ h2 {
 h1 {
   margin-top: 5rem;
 }
-
+.containerBtnS{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem
+  }
+  .btnLogIn{
+    margin-top: 2.5rem;
+  }
 @media (min-width: 480px) and (max-width: 770px) {
   .personal-h1 {
     font-size: 6.5rem;
@@ -153,20 +164,21 @@ h1 {
   }
   .personal-h1 {
     font-size: 4rem;
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
+  .contenedorSign {
+  padding: 3rem 3rem 2.5rem 3rem;
+}
   .container-sign {
     margin-top: 3.5rem;
+  }
 
-  }
-  .containerBtnS {
-    margin-top: 2rem;
-  }
   /*.inputEmail {
     width: 20rem;
   }*/
   .sing-upIn-form {
-    width: 60%;
+    width: 90%;
   }
+
 }
 </style>
