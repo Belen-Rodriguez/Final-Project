@@ -77,5 +77,8 @@ export default defineStore('user', {
 
             email: sergiperezmunoz@gmail.com
             password: AAA111qqq
+
+            email: belen2@gmail.com
+            password: Belen2
             */
 
