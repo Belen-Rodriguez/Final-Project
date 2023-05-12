@@ -237,6 +237,10 @@ h1 {
   font-size: 6rem;
   text-align: center;
 }
+h2{
+  text-align: center;
+  font-size: 2rem;
+}
 .containerTable{
   min-height: 20rem;
   display: flex;
@@ -337,7 +341,7 @@ tr td:last-child {
   }
   .section2{
   height: auto;
-  min-height: 25rem;
+  min-height: 22rem;
 }
 
   .cngBtn {
